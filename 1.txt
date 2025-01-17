@@ -1,5 +1,0 @@
-my function
-
-新功能1
-
-修正bug
