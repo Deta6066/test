@@ -8,26 +8,50 @@ on:
 
 jobs:
   release:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        configuration: [Debug, Release] # 可選的構建配置
+    runs-on: windows-latest
 
     steps:
       # Step 1: 檢出代碼
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v2
 
-      # Step 2: 壓縮 VIS_API 專案資料夾
+      # Step 2: 設置 .NET 環境
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0
+
+      # Step 3: 構建專案
+      - name: Build VIS_API
+        run: dotnet build VIS_API/VIS_API.csproj --configuration ${{ matrix.configuration }}
+        env:
+          Configuration: ${{ matrix.configuration }}
+
+      # Step 4: 驗證 VIS_API 資料夾是否存在
+      - name: Verify VIS_API folder exists
+        run: |
+          if [ ! -d "VIS_API" ]; then
+            echo "VIS_API folder not found! Workflow will exit."
+            exit 1
+          fi
+
+      # Step 5: 壓縮 VIS_API 資料夾
       - name: Package VIS_API
         run: |
           zip -r VIS_API-${{ github.ref_name }}.zip VIS_API
 
-      # Step 3: 創建 GitHub Release 並上傳壓縮包
+      # Step 6: 創建 GitHub Release 並上傳壓縮包
       - name: Create and Upload GitHub Release
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
           body: |
-            This release contains the latest build of VIS_API.
+            ## Release Notes
+            - This release contains the latest build of VIS_API.
           artifacts: VIS_API-${{ github.ref_name }}.zip
           draft: false
           prerelease: false
