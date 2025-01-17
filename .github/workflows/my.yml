@@ -15,61 +15,49 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Step 2: 輸出根目錄結構並保存為文件
-      - name: Save root directory structure
-        run: dir /s > root_directory_structure.txt
-
-      # Step 3: 設置 .NET 環境
+      # Step 2: 設置 .NET 8.0 環境
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 6.0
+          dotnet-version: 8.0.x
 
-      # Step 4: 確認解決方案文件是否存在並輸出文件結構
-      - name: Verify solution file and list directory
+      # Step 3: 確認解決方案文件是否存在
+      - name: Verify solution file exists
         run: |
           if [ ! -f "VIS_API/VIS_API.sln" ]; then
-            echo "Solution file VIS_API/VIS_API.sln not found!" >> directory_structure.txt
+            echo "Solution file VIS_API/VIS_API.sln not found!"
             exit 1
           fi
-          dir VIS_API /s >> directory_structure.txt
 
-      # Step 5: 恢復依賴
+      # Step 4: 恢復依賴
       - name: Restore dependencies
         run: dotnet restore VIS_API/VIS_API.sln
 
-      # Step 6: 輸出 VIS_API 資料夾結構並保存
-      - name: Save VIS_API directory structure
-        run: dir VIS_API /s > VIS_API_directory_structure.txt
-
-      # Step 7: 構建專案
+      # Step 5: 構建專案
       - name: Build project
         run: dotnet build VIS_API/VIS_API.sln --configuration Release --no-restore
 
-      # Step 8: 確認 VIS_API 資料夾存在
+      # Step 6: 確認 VIS_API 資料夾存在
       - name: Verify VIS_API folder exists
         run: |
           if [ ! -d "VIS_API" ]; then
-            echo "VIS_API folder not found!" >> directory_structure.txt
+            echo "VIS_API folder not found!"
             exit 1
           fi
 
-      # Step 9: 壓縮 VIS_API 資料夾
+      # Step 7: 壓縮 VIS_API 資料夾
       - name: Package VIS_API
         run: |
           zip -r VIS_API-${{ github.ref_name }}.zip VIS_API
 
-      # Step 10: 保存壓縮包和目錄結構作為 Artifact
+      # Step 8: 保存壓縮包作為 Artifact
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: VIS_API_Artifacts
-          path: |
-            root_directory_structure.txt
-            VIS_API_directory_structure.txt
-            VIS_API-${{ github.ref_name }}.zip
+          path: VIS_API-${{ github.ref_name }}.zip
 
-      # Step 11: 創建 GitHub Release 並上傳壓縮包
+      # Step 9: 創建 GitHub Release 並上傳壓縮包
       - name: Create and Upload GitHub Release
         uses: ncipollo/release-action@v1
         with:
@@ -78,6 +66,4 @@ jobs:
           body: |
             ## Release Notes
             - This release contains the latest build of VIS_API.
-          artifacts: VIS_API-${{ github.ref_name }}.zip
-          draft: false
-          prerelease: false
+          artifacts: VIS_A
