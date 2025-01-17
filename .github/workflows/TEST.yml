@@ -38,7 +38,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: VIS_API_Artifacts
-          path: VIS_API-v${{ github.ref_name }}.zip
+          path: VIS_API_Release-v${{ github.ref_name }}.zip
 
       # Step 7: 創建 GitHub Release 並上傳壓縮包
       - name: Create and Upload GitHub Release
