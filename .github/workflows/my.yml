@@ -1,5 +1,6 @@
 name: Build and Release VIS_API
 
+# 當標籤被推送時觸發（例如 v1.0.0）
 on:
   push:
     tags:
@@ -8,10 +9,6 @@ on:
 jobs:
   release:
     runs-on: windows-latest
-
-    env:
-      Solution_Name: VIS_API/VIS_API.sln  # 設置正確的解決方案路徑
-      Configuration: Release             # 構建配置
 
     steps:
       # Step 1: 檢出代碼
@@ -24,6 +21,36 @@ jobs:
         with:
           dotnet-version: 6.0
 
-      # Step 3: 使用 MSBuild 構建專案
-      - name: Build Solution
-        run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
+      # Step 3: 恢復依賴
+      - name: Restore dependencies
+        run: dotnet restore VIS_API/VIS_API.sln
+
+      # Step 4: 構建專案
+      - name: Build project
+        run: dotnet build VIS_API/VIS_API.sln --configuration Release --no-restore
+
+      # Step 5: 確認 VIS_API 資料夾存在
+      - name: Verify VIS_API folder exists
+        run: |
+          if [ ! -d "VIS_API" ]; then
+            echo "VIS_API folder not found! Workflow will exit."
+            exit 1
+          fi
+
+      # Step 6: 壓縮 VIS_API 資料夾
+      - name: Package VIS_API
+        run: |
+          zip -r VIS_API-${{ github.ref_name }}.zip VIS_API
+
+      # Step 7: 創建 GitHub Release 並上傳壓縮包
+      - name: Create and Upload GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          body: |
+            ## Release Notes
+            - This release contains the latest build of VIS_API.
+          artifacts: VIS_API-${{ github.ref_name }}.zip
+          draft: false
+          prerelease: false
