@@ -1,10 +1,10 @@
-name: Release .NET Core 6 API
+name: Release VIS_API
 
-# 當標籤被推送時觸發
+# 當標籤被推送時觸發（例如 v1.0.0）
 on:
   push:
     tags:
-      - 'v*'  # 只監控符合 vX.X.X 格式的標籤
+      - 'v*'
 
 jobs:
   release:
@@ -15,19 +15,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: 壓縮 VIS_API 資料夾
+      # Step 2: 壓縮 VIS_API 專案資料夾
       - name: Package VIS_API
         run: |
           zip -r VIS_API-${{ github.ref_name }}.zip VIS_API
 
-      # Step 3: 創建 Release 並上傳壓縮包
+      # Step 3: 創建 GitHub Release 並上傳壓縮包
       - name: Create and Upload GitHub Release
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
           body: |
-            This release contains the latest version of the VIS_API project.
+            This release contains the latest build of VIS_API.
           artifacts: VIS_API-${{ github.ref_name }}.zip
           draft: false
           prerelease: false
