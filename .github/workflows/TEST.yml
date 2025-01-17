@@ -1,10 +1,9 @@
-name: Build and Release VIS_API TEST
+name: Build and Release VIS_API
 
-# 當標籤被推送時觸發（例如 v1.0.0）
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
 
 jobs:
   release:
@@ -21,43 +20,27 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
-      # Step 3: 檢查解決方案文件是否存在
-      - name: Verify solution file exists
-        run: |
-          if [ ! -f "VIS_API/VIS_API.sln" ]; then
-            echo "Solution file VIS_API/VIS_API.sln not found!"
-            exit 1
-          fi
-
-      # Step 4: 恢復依賴
+      # Step 3: 恢復依賴
       - name: Restore dependencies
         run: dotnet restore VIS_API/VIS_API.sln
 
-      # Step 5: 構建專案
+      # Step 4: 構建專案
       - name: Build project
         run: dotnet build VIS_API/VIS_API.sln --configuration Release --no-restore
 
-      # Step 6: 確認 VIS_API 資料夾存在
-      - name: Verify VIS_API folder exists
-        run: |
-          if [ ! -d "VIS_API" ]; then
-            echo "VIS_API folder not found!"
-            exit 1
-          fi
-
-      # Step 7: 壓縮 VIS_API 資料夾
+      # Step 5: 壓縮 VIS_API 資料夾
       - name: Package VIS_API
         run: |
           zip -r VIS_API-${{ github.ref_name }}.zip VIS_API
 
-      # Step 8: 保存壓縮包作為 Artifact
+      # Step 6: 保存壓縮包作為 Artifact
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: VIS_API_Artifacts
           path: VIS_API-${{ github.ref_name }}.zip
 
-      # Step 9: 創建 GitHub Release 並上傳壓縮包
+      # Step 7: 創建 GitHub Release 並上傳壓縮包
       - name: Create and Upload GitHub Release
         uses: ncipollo/release-action@v1
         with:
