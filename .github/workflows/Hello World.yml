@@ -1,0 +1,20 @@
+name: Hello World
+
+# 當有任何推送時觸發
+on:
+  push:
+    branches:
+      - '*' # 監控所有分支
+
+jobs:
+  say-hello:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: 檢出代碼
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: 打印 Hello, World!
+      - name: Say Hello
+        run: echo "Hello, World!"
