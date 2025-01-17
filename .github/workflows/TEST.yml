@@ -31,7 +31,7 @@ jobs:
       # Step 5: 壓縮 VIS_API 資料夾
       - name: Package VIS_API
         run: |
-          Compress-Archive -Path VIS_API -DestinationPath VIS_API-v${{ github.ref_name }}.zip
+          Compress-Archive -Path VIS_API/bin/Release/net8.0/* -DestinationPath net8.0-v${{ github.ref_name }}.zip
 
       # Step 6: 保存壓縮包作為 Artifact
       - name: Upload artifacts
@@ -49,6 +49,6 @@ jobs:
           body: |
             ## Release Notes
             - This release contains the latest build of VIS_API.
-          artifacts: VIS_API-v${{ github.ref_name }}.zip
+          artifacts: VIS_API_Release-v${{ github.ref_name }}.zip
           draft: false
           prerelease: false
