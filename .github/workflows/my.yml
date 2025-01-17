@@ -1,6 +1,5 @@
-name: Release VIS_API
+name: Build and Release VIS_API
 
-# 當標籤被推送時觸發（例如 v1.0.0）
 on:
   push:
     tags:
@@ -9,6 +8,11 @@ on:
 jobs:
   release:
     runs-on: windows-latest
+
+    env:
+      Solution_Name: VIS_API/VIS_API.sln  # 設置正確的解決方案路徑
+      Configuration: Release             # 構建配置
+
     steps:
       # Step 1: 檢出代碼
       - name: Checkout code
@@ -21,6 +25,5 @@ jobs:
           dotnet-version: 6.0
 
       # Step 3: 使用 MSBuild 構建專案
-      - name: Build VIS_API
-        run: |
-          msbuild VIS_API/VIS_API.sln /t:Restore /p:Configuration=Release
+      - name: Build Solution
+        run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
