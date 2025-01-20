@@ -26,10 +26,8 @@ jobs:
 
       # Step 4: 發布應用
       - name: Publish application
-        run: |
-          dotnet publish VIS_API/VIS_API.sln \
-            --configuration Release \
-            --output VIS_API_Publish
+        run: dotnet publish VIS_API/VIS_API.sln --configuration Release --output VIS_API_Publish
+
 
       # Step 5: 壓縮發布檔
       - name: Package published files
