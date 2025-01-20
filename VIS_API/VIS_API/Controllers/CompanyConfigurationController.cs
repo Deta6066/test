@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VIS_API.Controllers.SLS;
-using VisLibrary.Models;
-using VisLibrary.Service.Interface;
-using VisLibrary.UnitWork;
+using VIS_API.Models;
+using VIS_API.Service.Interface;
+using VIS_API.UnitWork;
 
 namespace VIS_API.Controllers
 {

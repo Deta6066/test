@@ -1,8 +1,8 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
 using Service.Interface;
-using VisLibrary.Models;
-using VisLibrary.Models.View;
+using VIS_API.Models;
+using VIS_API.Models.View;
 
 namespace VIS_API.Controllers.PCD
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using VisLibrary.Models.PMD;
-using VisLibrary.Service.PMD;
+using VIS_API.Models.PMD;
+using VIS_API.Service.PMD;
 
 namespace VIS_API.Controllers.PMD
 {

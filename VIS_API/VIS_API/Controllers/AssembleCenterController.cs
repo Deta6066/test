@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using VIS_API.Mappings;
-using VisLibrary.Models;
-using VisLibrary.Repositories.Interface;
-using VisLibrary.Service.Interface;
-using VisLibrary.UnitWork;
+using VIS_API.Models;
+using VIS_API.Repositories.Interface;
+using VIS_API.Service.Interface;
+using VIS_API.UnitWork;
 
 namespace VIS_API.Controllers
 {

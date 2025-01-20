@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using VisLibrary.Models;
-using VisLibrary.Models.API;
-using VisLibrary.Models.View;
-using VisLibrary.Service.Interface;
-using VisLibrary.Utilities;
+using VIS_API.Models;
+using VIS_API.Models.API;
+using VIS_API.Models.View;
+using VIS_API.Service.Interface;
+using VIS_API.Utilities;
 
 namespace VIS_API.Controllers.SLS
 {

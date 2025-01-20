@@ -7,15 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Repositories\HistoricalMaterialUsage\**" />
-    <Compile Remove="Repositories\SupplierMaterial\**" />
-    <EmbeddedResource Remove="Repositories\HistoricalMaterialUsage\**" />
-    <EmbeddedResource Remove="Repositories\SupplierMaterial\**" />
-    <None Remove="Repositories\HistoricalMaterialUsage\**" />
-    <None Remove="Repositories\SupplierMaterial\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Dapper" Version="2.1.35" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.5" />
@@ -38,7 +29,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DapperDataBase\DapperDataBase.csproj" />
-
+    <Reference Include="DapperDataBase">
+      <HintPath>..\..\DapperDataBase_Release\DapperDataBase.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

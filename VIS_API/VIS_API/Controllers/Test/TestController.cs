@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VIS_API.Controllers.SLS;
-using VisLibrary.Models.API;
-using VisLibrary.Models;
-using VisLibrary.Service.Interface;
-using VisLibrary.Service;
-using VisLibrary.UnitWork;
-using VisLibrary.Models.JsonModel;
+using VIS_API.Models.API;
+using VIS_API.Models;
+using VIS_API.Service.Interface;
+using VIS_API.Service;
+using VIS_API.UnitWork;
+using VIS_API.Models.JsonModel;
 using AutoMapper;
 
 namespace VIS_API.Controllers.Test

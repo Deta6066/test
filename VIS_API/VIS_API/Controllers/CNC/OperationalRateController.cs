@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using VisLibrary.Models;
-using VisLibrary.Models.CNC;
-using VisLibrary.Models.View;
-using VisLibrary.Service.Interface;
+using VIS_API.Models;
+using VIS_API.Models.CNC;
+using VIS_API.Models.View;
+using VIS_API.Service.Interface;
 
 namespace VIS_API.Controllers.CNC
 {

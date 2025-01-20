@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using VisLibrary.Models.API;
-using VisLibrary.Models;
+using VIS_API.Models.API;
+using VIS_API.Models;
 using Microsoft.AspNetCore.Identity;
-using VisLibrary.Service.Interface;
-using VisLibrary.Models.View;
-using VisLibrary.Models.JsonModel;
-using VisLibrary.Utilities;
+using VIS_API.Service.Interface;
+using VIS_API.Models.View;
+using VIS_API.Models.JsonModel;
+using VIS_API.Utilities;
 using Microsoft.AspNetCore.Authorization;
 
 namespace VIS_API.Controllers
