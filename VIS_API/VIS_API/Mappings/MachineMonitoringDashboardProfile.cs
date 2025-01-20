@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using VisLibrary.Models.CNC;
-using VisLibrary.Models.View;
+using VIS_API.Models.CNC;
+using VIS_API.Models.View;
 namespace VIS_API.Mappings
 {
     public class MachineMonitoringDashboardProfile: Profile

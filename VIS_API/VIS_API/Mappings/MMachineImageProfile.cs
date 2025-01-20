@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using VisLibrary.Models.CNC;
+using VIS_API.Models.CNC;
 namespace VIS_API.Mappings
 {
     public class MMachineImageProfile:Profile

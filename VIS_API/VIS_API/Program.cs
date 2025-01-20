@@ -10,10 +10,10 @@ using NLog;
 using NLog.Web;
 using System;
 using System.Text;
-using VisLibrary.Extensions;
-using VisLibrary.Middleware;
-using VisLibrary.Models;
-using VisLibrary.Repositories.Interface;
+using VIS_API.Extensions;
+using VIS_API.Middleware;
+using VIS_API.Models;
+using VIS_API.Repositories.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 

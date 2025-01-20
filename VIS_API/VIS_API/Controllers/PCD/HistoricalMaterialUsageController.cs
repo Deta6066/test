@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using VisLibrary.Business;
-using VisLibrary.Models;
-using VisLibrary.Models.PCD;
-using VisLibrary.Models.View;
-using VisLibrary.Service.Interface;
-using VisLibrary.Utilities;
+using VIS_API.Business;
+using VIS_API.Models;
+using VIS_API.Models.PCD;
+using VIS_API.Models.View;
+using VIS_API.Service.Interface;
+using VIS_API.Utilities;
 
 namespace VIS_API.Controllers.PCD
 {

@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using VisLibrary.Models;
-using VisLibrary.Models.CNC;
-using VisLibrary.Repositories.Interface;
-using VisLibrary.Service.CNC;
-using VisLibrary.Service.Interface;
-using VisLibrary.Service.JWT;
+using VIS_API.Models;
+using VIS_API.Models.CNC;
+using VIS_API.Repositories.Interface;
+using VIS_API.Service.CNC;
+using VIS_API.Service.Interface;
+using VIS_API.Service.JWT;
 
 namespace VIS_API.Controllers.CNC
 {

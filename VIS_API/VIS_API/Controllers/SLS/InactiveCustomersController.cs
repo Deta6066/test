@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using VisLibrary.Models;
-using VisLibrary.Models.SLS;
-using VisLibrary.Models.View;
-using VisLibrary.Service.Interface;
+using VIS_API.Models;
+using VIS_API.Models.SLS;
+using VIS_API.Models.View;
+using VIS_API.Service.Interface;
 
 namespace VIS_API.Controllers.SLS
 {

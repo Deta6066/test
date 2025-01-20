@@ -4,12 +4,12 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using VisLibrary.Models;
-using VisLibrary.Repositories.Interface;
-using VisLibrary.Service;
-using VisLibrary.Service.Interface;
-using VisLibrary.Service.JWT;
-using VisLibrary.UnitWork;
+using VIS_API.Models;
+using VIS_API.Repositories.Interface;
+using VIS_API.Service;
+using VIS_API.Service.Interface;
+using VIS_API.Service.JWT;
+using VIS_API.UnitWork;
 
 namespace VIS_API.Controllers
 {

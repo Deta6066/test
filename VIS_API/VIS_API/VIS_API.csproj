@@ -5,24 +5,27 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <DocumentationFile>bin\Debug\net8.0\VisLibrary.xml</DocumentationFile>
 
     <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Dapper" Version="2.1.35" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.5" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
     <PackageReference Include="MySql.Data" Version="9.0.0" />
     <PackageReference Include="MySqlConnector" Version="2.3.7" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NLog" Version="5.3.2" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.11" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DapperDataBase\DapperDataBase.csproj" />
-    <ProjectReference Include="..\..\VisLibrary\VisLibrary.csproj" />
+    <Reference Include="DapperDataBase">
+      <HintPath>..\..\..\DapperDataBase.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

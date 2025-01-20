@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using VisLibrary.Models;
+using VIS_API.Models;
 
 namespace VIS_API.Mappings
 {
