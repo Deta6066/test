@@ -1,4 +1,4 @@
-name: Build and Release VIS_API
+name: Build and Publish .NET Core App
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - "v*"
 
 jobs:
-  release:
+  build-and-publish:
     runs-on: windows-latest
 
     steps:
@@ -24,21 +24,24 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore VIS_API/VIS_API.sln
 
-      # Step 4: 構建專案
-      - name: Build project
-        run: dotnet build VIS_API/VIS_API.sln --configuration Release --no-restore
-
-      # Step 5: 壓縮 VIS_API 資料夾
-      - name: Package VIS_API
+      # Step 4: 發布應用
+      - name: Publish application
         run: |
-          Compress-Archive -Path VIS_API/VIS_API/bin/Release/net8.0/* -DestinationPath VIS_API_Release-v${{ github.ref_name }}.zip
+          dotnet publish VIS_API/VIS_API.sln \
+            --configuration Release \
+            --output VIS_API_Publish
 
-      # Step 6: 保存壓縮包作為 Artifact
+      # Step 5: 壓縮發布檔
+      - name: Package published files
+        run: |
+          Compress-Archive -Path VIS_API_Publish/* -DestinationPath VIS_API_Publish-v${{ github.ref_name }}.zip
+
+      # Step 6: 上傳發布檔作為 Artifact
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: VIS_API_Artifacts
-          path: VIS_API_Release-v${{ github.ref_name }}.zip
+          name: VIS_API_Publish
+          path: VIS_API_Publish-v${{ github.ref_name }}.zip
 
       # Step 7: 創建 GitHub Release 並上傳壓縮包
       - name: Create and Upload GitHub Release
@@ -48,7 +51,7 @@ jobs:
           name: Release ${{ github.ref_name }}
           body: |
             ## Release Notes
-            - This release contains the latest build of VIS_API.
-          artifacts: VIS_API_Release-v${{ github.ref_name }}.zip
+            - This release contains the published application files.
+          artifacts: VIS_API_Publish-v${{ github.ref_name }}.zip
           draft: false
           prerelease: false
