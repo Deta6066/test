@@ -8,6 +8,9 @@ on:
 jobs:
   build-and-deploy:
     runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
 
     steps:
       # Step 1: 檢出代碼
@@ -39,14 +42,18 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-     
+      # Step 6.1: 列出已載入的 SSH Key (檢查是否成功載入)
+      - name: List loaded SSH keys
+        run: ssh-add -l
 
-      # Step 7: 傳輸檔案到遠端伺服器 (使用 -P 2762 + -v + StrictHostKeyChecking=no)
+      # Step 7: 傳輸檔案到遠端伺服器
       - name: Upload files to server
         run: |
-          scp -v -P 2762 -o StrictHostKeyChecking=no VIS_API_Publish-v${{ github.ref_name }}.zip dek@59.125.31.88:C:/temp/
+          scp -v -P 2762 -o StrictHostKeyChecking=no \
+            VIS_API_Publish-v${{ github.ref_name }}.zip \
+            dek@59.125.31.88:C:/temp/
 
-      # Step 8: 解壓並部署到目標目錄 (使用 -p 2762)
+      # Step 8: 解壓並部署到目標目錄
       - name: Deploy to target directory
         run: |
           ssh -v -p 2762 -o StrictHostKeyChecking=no dek@59.125.31.88 "
