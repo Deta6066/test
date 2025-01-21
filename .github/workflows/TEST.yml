@@ -42,12 +42,12 @@ jobs:
       # Step 7: 傳輸檔案到遠端伺服器
       - name: Upload files to server
         run: |
-          scp VIS_API_Publish-v${{ github.ref_name }}.zip dek@172.23.9.101:C:/temp/
+          scp -P 2762 VIS_API_Publish-v${{ github.ref_name }}.zip dek@59.125.31.88:C:/temp/
 
       # Step 8: 解壓並部署到目標目錄
       - name: Deploy to target directory
         run: |
-          ssh dek@172.23.9.101 "
+          ssh -p 2762 dek@59.125.31.88 "
           mkdir -p D:/API_Release;
           powershell -Command 'Expand-Archive -Path C:/temp/VIS_API_Publish-v${{ github.ref_name }}.zip -DestinationPath D:/API_Release -Force';
           "
