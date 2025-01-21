@@ -71,3 +71,25 @@ jobs:
         shell: bash
         run: |
           ssh -v -p 2762 -o StrictHostKeyChecking=no dek@59.125.31.88 "powershell -Command \"if (-Not (Test-Path 'D:\API_Release')) { New-Item -ItemType Directory -Path 'D:\API_Release' } ; Expand-Archive -Path 'C:/temp/VIS_API_Publish-v${{ github.ref_name }}.zip' -DestinationPath 'D:\API_Release' -Force\""
+      # Step 10: 建立 GitHub Release （使用 tag 名稱）
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      # Step 11: 上傳 Release Asset
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: VIS_API_Publish-v${{ github.ref_name }}.zip
+          asset_name: VIS_API_Publish-v${{ github.ref_name }}.zip
+          asset_content_type: application/zip
