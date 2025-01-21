@@ -31,10 +31,10 @@ jobs:
       - name: Publish application
         run: dotnet publish VIS_API/VIS_API.sln --configuration Release --output VIS_API_Publish
 
-      # Step 5: 壓縮發布檔
+      # Step 5: 壓縮發布檔 (使用 zip)
       - name: Package published files
-        run: |
-          Compress-Archive -Path VIS_API_Publish/* -DestinationPath VIS_API_Publish-v${{ github.ref_name }}.zip
+        shell: bash
+        run: zip -r VIS_API_Publish-v${{ github.ref_name }}.zip VIS_API_Publish
 
       # Step 6: 設置 SSH 連接 (載入私鑰)
       - name: Setup SSH
