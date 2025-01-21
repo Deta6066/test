@@ -70,7 +70,4 @@ jobs:
       - name: Deploy to target directory
         shell: bash
         run: |
-          ssh -v -p 2762 -o StrictHostKeyChecking=no dek@59.125.31.88 "
-            mkdir -p D:/API_Release;
-            powershell -Command 'Expand-Archive -Path C:/temp/VIS_API_Publish-v${{ github.ref_name }}.zip -DestinationPath D:/API_Release -Force';
-          "
+          ssh -v -p 2762 -o StrictHostKeyChecking=no dek@59.125.31.88 "powershell -Command \"if (-Not (Test-Path 'D:\API_Release')) { New-Item -ItemType Directory -Path 'D:\API_Release' } ; Expand-Archive -Path 'C:/temp/VIS_API_Publish-v${{ github.ref_name }}.zip' -DestinationPath 'D:\API_Release' -Force\""
