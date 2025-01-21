@@ -42,7 +42,7 @@ jobs:
       # Step 7: 傳輸檔案到遠端伺服器
       - name: Upload files to server
         run: |
-          scp -v -P -o StrictHostKeyChecking=no 2762 VIS_API_Publish-v${{ github.ref_name }}.zip dek@59.125.31.88:C:/temp/
+          scp -v -P 2762 -o StrictHostKeyChecking=no VIS_API_Publish-v${{ github.ref_name }}.zip dek@59.125.31.88:C:/temp/
 
       # Step 8: 解壓並部署到目標目錄
       - name: Deploy to target directory
