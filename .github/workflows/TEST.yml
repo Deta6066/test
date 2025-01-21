@@ -39,9 +39,7 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      # (可選) Step 6.1: 列出已載入的 SSH Key (檢查是否成功載入)
-      - name: List loaded SSH keys
-        run: ssh-add -l
+     
 
       # Step 7: 傳輸檔案到遠端伺服器 (使用 -P 2762 + -v + StrictHostKeyChecking=no)
       - name: Upload files to server
