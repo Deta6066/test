@@ -27,7 +27,6 @@ jobs:
 
       # Step 3: 設置 .NET 環境 (回到 bash)
       - name: Setup .NET
-        shell: bash
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
