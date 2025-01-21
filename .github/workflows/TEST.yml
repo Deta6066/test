@@ -8,6 +8,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: windows-latest
+    
     defaults:
       run:
         shell: bash
@@ -17,44 +18,58 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Step 2: 設置 .NET 環境
+      # Step 2: 以 PowerShell 安裝 zip (因為 choco 只在 PowerShell/CMD 有效)
+      - name: Install zip
+        # 使用 pwsh 以確保可使用 choco
+        shell: pwsh
+        run: |
+          choco install zip -y
+
+      # Step 3: 設置 .NET 環境 (回到 bash)
       - name: Setup .NET
+        shell: bash
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
 
-      # Step 3: 恢復依賴
+      # Step 4: 恢復依賴
       - name: Restore dependencies
+        shell: bash
         run: dotnet restore VIS_API/VIS_API.sln
 
-      # Step 4: 發布應用
+      # Step 5: 發布應用
       - name: Publish application
+        shell: bash
         run: dotnet publish VIS_API/VIS_API.sln --configuration Release --output VIS_API_Publish
 
-      # Step 5: 壓縮發布檔 (使用 zip)
+      # Step 6: 壓縮發布檔 (使用 zip)
       - name: Package published files
         shell: bash
-        run: zip -r VIS_API_Publish-v${{ github.ref_name }}.zip VIS_API_Publish
+        run: |
+          zip -r VIS_API_Publish-v${{ github.ref_name }}.zip VIS_API_Publish
 
-      # Step 6: 設置 SSH 連接 (載入私鑰)
+      # Step 7: 設置 SSH 連接 (載入私鑰)
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      # Step 6.1: 列出已載入的 SSH Key (檢查是否成功載入)
+      # Step 7.1: 列出已載入的 SSH Key (檢查是否成功載入)
       - name: List loaded SSH keys
+        shell: bash
         run: ssh-add -l
 
-      # Step 7: 傳輸檔案到遠端伺服器
+      # Step 8: 傳輸檔案到遠端伺服器 (使用 scp)
       - name: Upload files to server
+        shell: bash
         run: |
           scp -v -P 2762 -o StrictHostKeyChecking=no \
             VIS_API_Publish-v${{ github.ref_name }}.zip \
             dek@59.125.31.88:C:/temp/
 
-      # Step 8: 解壓並部署到目標目錄
+      # Step 9: 解壓並部署到目標目錄
       - name: Deploy to target directory
+        shell: bash
         run: |
           ssh -v -p 2762 -o StrictHostKeyChecking=no dek@59.125.31.88 "
             mkdir -p D:/API_Release;
