@@ -64,13 +64,13 @@ jobs:
         run: |
           scp -v -P 2762 -o StrictHostKeyChecking=no \
             VIS_API_Publish-v${{ github.ref_name }}.zip \
-            dek@59.125.31.88:C:/temp/
+            ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:C:/temp/
 
       # Step 9: 解壓並部署到目標目錄
       - name: Deploy to target directory
         shell: bash
         run: |
-          ssh -v -p 2762 -o StrictHostKeyChecking=no dek@59.125.31.88 "powershell -Command \"if (-Not (Test-Path 'D:\API_Release')) { New-Item -ItemType Directory -Path 'D:\API_Release' } ; Expand-Archive -Path 'C:/temp/VIS_API_Publish-v${{ github.ref_name }}.zip' -DestinationPath 'D:\API_Release' -Force\""
+          ssh -v -p 2762 -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} "powershell -Command \"if (-Not (Test-Path 'D:\API_Release')) { New-Item -ItemType Directory -Path 'D:\API_Release' } ; Expand-Archive -Path 'C:/temp/VIS_API_Publish-v${{ github.ref_name }}.zip' -DestinationPath 'D:\API_Release' -Force\""
       # Step 10: 建立 GitHub Release （使用 tag 名稱）
       - name: Create Release
         id: create_release
